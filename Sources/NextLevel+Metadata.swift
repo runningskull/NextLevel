@@ -72,14 +72,12 @@ extension CMSampleBuffer {
     
 }
 
-fileprivate let NextLevelMetadataTitle = "NextLevel"
-fileprivate let NextLevelMetadataArtist = "http://nextlevel.engineering/"
 
 extension NextLevel {
-    
+
     internal class func tiffMetadata() -> [String: Any] {
-        return [ kCGImagePropertyTIFFSoftware as String : NextLevelMetadataTitle,
-                 kCGImagePropertyTIFFArtist as String : NextLevelMetadataArtist,
+        return [ kCGImagePropertyTIFFSoftware as String : NextLevel.MetadataTitle,
+                 kCGImagePropertyTIFFArtist as String : NextLevel.MetadataArtist,
                  kCGImagePropertyTIFFDateTime as String : Date().iso8601() ]
     }
     
@@ -94,12 +92,12 @@ extension NextLevel {
         let softwareItem = AVMutableMetadataItem()
         softwareItem.keySpace = AVMetadataKeySpaceCommon
         softwareItem.key = AVMetadataCommonKeySoftware as (NSCopying & NSObjectProtocol)
-        softwareItem.value = NextLevelMetadataTitle as (NSCopying & NSObjectProtocol)
+        softwareItem.value = NextLevel.MetadataTitle as (NSCopying & NSObjectProtocol)
         
         let artistItem = AVMutableMetadataItem()
         artistItem.keySpace = AVMetadataKeySpaceCommon
         artistItem.key = AVMetadataCommonKeyArtist as (NSCopying & NSObjectProtocol)
-        artistItem.value = NextLevelMetadataArtist as (NSCopying & NSObjectProtocol)
+        artistItem.value = NextLevel.MetadataArtist as (NSCopying & NSObjectProtocol)
         
         let creationDateItem = AVMutableMetadataItem()
         creationDateItem.keySpace = AVMetadataKeySpaceCommon
