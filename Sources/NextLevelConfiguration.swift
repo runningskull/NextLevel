@@ -278,6 +278,19 @@ public class NextLevelPhotoConfiguration : NextLevelConfiguration {
     /// Codec used to encode photo, AV dictionary key AVVideoCodecKey
     public var codec: String
 
+    /// Compression quality to be used if codec is JPEG, AV dictionary key is AVVideoCompressionPropertiesKey.AVVideoQualityKey
+    public var compressionQuality: Double? {
+        didSet {
+            if let quality = compressionQuality {
+                if quality < 0.0 {
+                    compressionQuality = 0.0
+                } else if quality > 1.0 {
+                    compressionQuality = 1.0
+                }
+            }
+        }
+    }
+
     /// True indicates that NextLevel should generate a thumbnail for the photo
     public var generateThumbnail: Bool
     
@@ -300,6 +313,9 @@ public class NextLevelPhotoConfiguration : NextLevelConfiguration {
             return options
         } else {
             var config: [String: Any] = [AVVideoCodecKey: self.codec]
+            if compressionQuality != nil {
+                config[AVVideoCompressionPropertiesKey] = [AVVideoQualityKey: compressionQuality]
+            }
             if generateThumbnail == true {
                 let settings = AVCapturePhotoSettings()
                 if settings.availablePreviewPhotoPixelFormatTypes.count > 0 {
